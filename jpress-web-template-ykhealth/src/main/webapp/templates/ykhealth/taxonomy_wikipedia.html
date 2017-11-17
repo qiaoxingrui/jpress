@@ -1,0 +1,67 @@
+<#include "_layout.html"/>
+<@layout>
+<div class="main">
+	<div class="cyclopedia-banner">
+		<img src="${CTPATH}/assets/images/005.png">
+	</div>
+	<div >
+		<ul class="cyclopedia-list">
+			<@jp.contentPage pageSize="5" >
+			<#list page.getList() as content>
+			<li>
+				<img src="${(content.thumbnail)!}">
+				<div class="cyclopedia-list-main">
+					<h2>${(content.title)!}</h2>
+					<p>
+						${(content.summary)!}
+					</p>
+					<a href="${(content.url)!}">阅读全文 ></a>
+				</div>
+			</li>
+			</#list>
+			</@jp.contentPage>
+		</ul>
+		<ul class="x-page">
+			<@pagination>
+			<#list pages as pi>
+				<li class="${pi.style!}">
+					<a href="${pi.url!}">${pi.text!}</a>
+				</li>
+			</#list>
+		</@pagination>
+		</ul>
+		<div class="cyclopedia-down">
+			<div class="main-right">
+				<div class="user">
+					<img src="${CPATH}${OPTION('ykHealth_photo')!}">
+					<p class="user-name">${OPTION('ykHealth_user_nick')!}</p>
+					<hr>
+					<p>简介： ${OPTION('ykHealth_descript')!}</p>
+				</div>
+			</div>
+			<div class="cyclopedia-more">
+				<div>
+					<a href="details.html">
+						热门内容
+					</a>
+				</div>
+
+				<ul class="cyclopedia-list-img">
+					<@jp.contents  module="wikipedia" count="5" orderBy="view_count" hasThumbnail="true">
+						<#list contents as content>
+							<#if content?is_first>
+								<li style="margin-left:0;">
+								<#else>
+								<li>
+							</#if>
+							<img src="${(content.thumbnail)!}">
+							<a href="${(content.url)!}">${(content.title)!}</a>
+						</li>
+						</#list>
+					</@jp.contents>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+</@layout>

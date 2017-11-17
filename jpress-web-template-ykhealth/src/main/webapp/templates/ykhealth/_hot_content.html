@@ -1,0 +1,46 @@
+<#macro hot_content >
+    <div class="main-right-case">
+        <div class="user">
+            <img src="${CPATH}${OPTION('ykHealth_photo')!}">
+            <p class="user-name">${OPTION('ykHealth_user_nick')!}</p>
+            <hr>
+            <p>简介： ${OPTION('ykHealth_descript')!}</p>
+        </div>
+        <div class="hot-nav">
+            <span>热门内容</span>
+            <ul>
+                <@jp.contents count="5" orderBy="view_count" hasThumbnail="true">
+                <#list contents as content>
+                    <li>
+                        <a href="${(content.url)!}">
+                            <div class="hot-list">
+                                <div class="hot-list-img">
+                                    <img src="${content.thumbnailByName("t2")}">
+                                    <!--<img src="${(content.thumbnail)!}">-->
+                                </div>
+                                <div class="hot-list-text">
+                                    <h4 class="i_tittle">${(content.title)!}</h4>
+                                    <div class="l_time">${contents[0].created?string("yyyy-MM-dd")}</div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </#list>
+            </@jp.contents>
+            </ul>
+        </div>
+        <div class="x-white-box">
+            <h3 class="x-box-title">
+                热门标签 <!--<span class="x-title-border"></span>-->
+            </h3>
+            <ul class="x-tag">
+                <@jp.taxonomys count="20" type="tag" orderBy="content_count" >
+                <#list taxonomys as tag>
+                    <li>
+                        <a href="${tag.url!}">${tag.title!}</a>
+                    </li>
+                </#list>
+            </@jp.taxonomys >
+        </div>
+    </div>
+</#macro>

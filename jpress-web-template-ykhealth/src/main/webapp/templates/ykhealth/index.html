@@ -1,0 +1,191 @@
+<#include "_layout.html"/>
+<@layout>
+<div class="home-banner">
+    <img src="${CTPATH}/assets/images/banner.png">
+    <div class="banner-right">
+			<span>
+				如何吃才能排出身体的湿毒？
+			</span>
+    </div>
+</div>
+<div class="home-daily-share">
+    <div class="long-string"></div>
+    <div class="headline">
+			<span>
+				最新分享
+			</span>
+    </div>
+    <div class="daily-content">
+        <@jp.indexPage module="daily">
+        <@jp.contents module="daily" >
+        <div class="daily-content-center">
+            <div style="height:26px;margin: 0 5.7%">
+                <a href="${(contents[0].url)!}" class="daily-share-tittle">
+                    ${(contents[0].title)!}
+                </a>
+                <span class="daily-date">
+						${contents[0].created?string("yyyy-MM-dd")}
+					</span>
+            </div>
+            <div>
+                <ul class="daily-img">
+                    <#list GET_IMG_TAG(contents[0].text)?split(",") as x>
+                        <#if x?index lt 3>
+                            <li>
+                                <a href="${(contents[0].url)!}">
+                                    <img src="${(x)!}"/>
+                                </a>
+                            </li>
+                        </#if>
+
+                    </#list>
+                </ul>
+            </div>
+        </div>
+    </@jp.contents>
+</@jp.indexPage>
+</div>
+</div>
+<div class="health-tips">
+    <span>健康小贴士</span>
+</div>
+<div class="home-health-cyclopedia">
+    <div class="long-string"></div>
+    <div class="headline">
+			<span>
+				健康百科
+			</span>
+    </div>
+    <div class="health-cyclopedia-nav">
+        <@jp.indexPage module="wikipedia">
+        <#list page.getList() as content>
+            <#if  content?index == 0>
+                <ul class="cyclopedia-nav-up">
+                    <li class="health-cyclopedia-banner">
+                        <#if content.thumbnail??>
+                            <img src="${content.thumbnailByName("t2")}">
+                            <#else>
+                                <img src="${CPATH}${content.avatar!TPATH+'/assets/images/timg.png'}">
+                        </#if>
+                    </li>
+                    <li class="health-cyclopedia-tittle">
+                            <span>
+                                ${(content.title)!}
+                            </span>
+                        <p>
+                            ${(content.summary)!}
+                        </p>
+                        <a href="${(content.url)!}">阅读全文 ></a>
+                    </li>
+                </ul>
+            </#if>
+        </#list>
+
+    </@jp.indexPage>
+
+    <ul class="cyclopedia-nav-down">
+        <@jp.indexPage module="wikipedia">
+        <#list page.getList() as x>
+            <#if x?index gt 0 && x?index lt 4>
+                <#if x?index == 1>
+                    <li style="background-color:#42baf7;margin-left:0;">
+                        <h4>${(x.title)!}</h4>
+                        <div class="cyclopedia-line"></div>
+                        <p>${(x.summary)!}</p>
+                        <a href="${(x.url)!}">阅读全文 ></a>
+                    </li>
+                    <#elseif x?index == 2>
+                        <li style="background-color: #6080f7;">
+                            <h4>${(x.title)!}</h4>
+                            <div class="cyclopedia-line"></div>
+                            <p>${(x.summary)!}</p>
+                            <a href="${(x.url)!}">阅读全文 ></a>
+                        </li>
+                        <#else>
+                            <li style="background-color: #9170f7;">
+                                <h4>${(x.title)!}</h4>
+                                <div class="cyclopedia-line"></div>
+                                <p>${(x.summary)!}</p>
+                                <a href="${(x.url)!}">阅读全文 ></a>
+                            </li>
+                </#if>
+
+            </#if>
+        </#list>
+    </@jp.indexPage>
+    </ul>
+</div>
+</div>
+<!--<div class="home-successful-case">
+    <div class="home-successful-case-nav">
+        <div class="long-string"></div>
+        <div class="headline">
+				<span>
+					成功案例
+				</span>
+        </div>
+        <div style="width:100%;">
+            <div class="home-case-menu">
+                <ul>
+                    <@jp.contents module="case"  >
+                    <#assign catas="">
+                        <#assign count=0>
+                            <#list contents as content>
+                                <#if count lt 5 && !(catas?contains(content.getTaxonomyByParent('category',17).id.toString()))>
+                                    <#if count == 0 >
+                                        <li class="case-active" value="a${count}" >
+                                            <a>${content.getTaxonomyByParent('category',17).title}</a>
+                                        </li>
+                                        <#else>
+                                            <li value="a${count}">
+                                                <a>${content.getTaxonomyByParent('category',17).title}</a>
+                                            </li>
+                                    </#if>
+                                    <#assign catas = "${content.getTaxonomyByParent('category',17).id}" + "," + catas/>
+                                    <#assign count++ />
+                                </#if>
+                            </#list>
+                        </@jp.contents>
+                </ul>
+            </div>
+            <@jp.contents module="case"  >
+            <#assign catas="">
+                <#assign count=0>
+                    <#list contents as content>
+                        <#if count lt 5 && !(catas?contains(content.getTaxonomyByParent('category',17).id.toString()))>
+                            <div class="successful-case-content" id="a${count}">
+                                <div class="successful-case-content-center">
+                                    <div style="height:26px;margin: 0 5.7%">
+							<span class="successful-case-tittle">
+								<a class="successful-case-tittle" href="${(content.url)!}">${content.title}</a>
+							</span>
+                                        <a href="#" class="more-case">
+                                            更多案例 >
+                                        </a>
+                                    </div>
+                                    <#if GET_IMG_TAG(content.text)?length !=0 >
+                                        <div>
+                                            <ul class="daily-img">
+                                                <#list GET_IMG_TAG(content.text)?split(",") as x>
+                                                    <#if x?index lt 3>
+                                                        <li>
+                                                            <a href="${(content.url)!}">
+                                                                <img src="${(x)!}"/>
+                                                            </a>
+                                                        </li>
+                                                    </#if>
+                                                </#list>
+                                            </ul>
+                                        </div>
+                                    </#if>
+                                </div>
+                            </div>
+                            <#assign catas = "${content.getTaxonomyByParent('category',17).id}" + "," + catas/>
+                            <#assign count++ />
+                        </#if>
+                    </#list>
+                </@jp.contents>
+        </div>
+    </div>
+</div>-->
+</@layout>

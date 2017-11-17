@@ -1,0 +1,66 @@
+<#include "_layout.html"/>
+<#include "_hot_content.html"/>
+<@layout>
+<div class="main">
+	<div class="main-left">
+		<ul class="daily-list">
+			<@jp.contentPage pageSize="5" >
+			<#list page.getList() as content>
+				<#if content?index == 0>
+					<li style="padding-top:0;">
+					<#else>
+					<li>
+				</#if>
+					<a href="${(content.url)!}">
+						${(content.title)!}
+					</a>
+					<p>${(content.summary)!}
+						<a href="${(content.url)!}" class="details">[详情]</a>
+					</p>
+					<#if GET_IMG_TAG(content.text)?length != 0>
+						<ul class="daily-list-img">
+							<#list GET_IMG_TAG(content.text)?split(",") as x>
+								<#if x?index lt 5>
+									<#if x?index ==0>
+										<li style="margin-left:0;">
+											<a href="${(content.url)!}">
+												<img src="${(x)!}"/>
+											</a>
+										</li>
+										<#else>
+											<li>
+												<a href="${(content.url)!}">
+													<img src="${(x)!}"/>
+												</a>
+											</li>
+									</#if>
+
+								</#if>
+							</#list>
+						</ul>
+					</#if>
+					<div class="icon-btn">
+						<span class="daily-date2">
+							${content.created?string("yyyy-MM-dd")}
+						</span>
+						<i class="iconfont icon-chakan" > ${content.view_count!'0'}</i>
+						<i class="iconfont icon-fenxiang"></i>
+					</div>
+				</li>
+			</#list>
+		</@jp.contentPage>
+		</ul>
+		<ul class="x-page">
+			<@pagination>
+			<#list pages as pi>
+				<li class="${pi.style!}">
+					<a href="${pi.url!}">${pi.text!}</a>
+				</li>
+			</#list>
+		</@pagination>
+		</ul>
+	</div>
+	<@hot_content>
+	</@hot_content>
+</div>
+</@layout>

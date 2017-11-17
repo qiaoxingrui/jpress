@@ -1,0 +1,7 @@
+/WebRoot/
+.DS_Store
+.classpath
+.project
+.settings
+.idea
+jpress.iml

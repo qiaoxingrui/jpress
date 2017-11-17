@@ -1,0 +1,27 @@
+<#include "_layout.html"/>
+<#include "_hot_content.html"/>
+<#macro script_import>
+    <script src="${CPATH}/counter?cid=${content.id!}"></script>
+</#macro>
+<@layout>
+    <div class="main">
+        <div class="main-left">
+            <div>
+                <h1>${content.title!}</h1>
+            </div>
+            <div>
+                <span class="daily-date2">${content.created?string('yyyy-MM-dd')!}</span>
+                <div class="icon-btn">
+                    <i class="iconfont icon-chakan" > ${content.viewCount!'0'}</i>
+                    <i class="iconfont icon-fenxiang"></i>
+                </div>
+            </div>
+            <div class="main-line"></div>
+            <div>
+                ${content.text!}
+            </div>
+        </div>
+        <@hot_content >
+    </@hot_content>
+    </div>
+</@layout>
